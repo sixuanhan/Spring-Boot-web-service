@@ -2,6 +2,12 @@ package com.example.userRegistration;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,19 +19,11 @@ public class UserController {
     @Autowired
     private UserService service;
 
-
-//    @GetMapping("/user")
-//    public long user(@RequestParam(value = "email", defaultValue = "null") String email,
-//                     @RequestParam(value = "firstName", defaultValue = "null") String firstName,
-//                     @RequestParam(value = "lastName", defaultValue = "null") String lastName,
-//                     @RequestParam(value = "address", defaultValue = "null") String address,
-//                     @RequestParam(value = "password", defaultValue = "null") String password) {
-//        long ID = counter.incrementAndGet();
-//        User user =  new User(email, firstName, lastName, address, password);
-//        map.put(ID, user);
-//        return ID;
-//    }
-
+    @Operation(summary = "Create a user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created the user",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class)) })})
     @PostMapping("/")
     public ResponseEntity<User> create(@RequestBody User user) throws URISyntaxException {
         User createdUser = service.create(user);
@@ -40,20 +38,13 @@ public class UserController {
     }
 
 
-
-//    public String getUserInfo(@RequestParam(value = "ID", defaultValue = "1") String ID) {
-//        long longID = Long.parseLong(ID);
-//        String template = "email = %s; firstName = %s; lastName = %s; address = %s; password = %s;";
-//        User user = map.get(longID);
-//        return String.format(template, user.email, user.firstName, user.lastName, user.address, user.password);
-//    }
-
-//    @GetMapping("/getUserInfo")
-//    public User getUserInfo(@RequestParam(value = "ID", defaultValue = "1") String ID) {
-//        long longID = Long.parseLong(ID);
-//        return map.get(longID);
-//    }
-
+    @Operation(summary = "Get a user by their id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the user",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class)) }),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content) })
     @GetMapping("/{id}")
     public ResponseEntity<User> read(@PathVariable("id") Long id) {
         User foundUser = service.read(id);
@@ -64,6 +55,13 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Update a user by their id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Updated the user",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class)) }),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content) })
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) {
         User updatedUser = service.update(id, user);
@@ -74,6 +72,10 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "delete a user by their id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Deleted the user",
+                    content = @Content)})
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
         service.delete(id);
