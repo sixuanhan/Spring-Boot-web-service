@@ -1,11 +1,32 @@
 package com.example.userRegistration;
 
+import lombok.Data;
+
+import javax.persistence.*;
+
+
+@Entity
+@Table(name = "user")
+@Data
 public class User {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    @Column(name = "email")
     String email;
+
+    @Column(name = "firstName")
     String firstName;
+
+    @Column(name = "lastName")
     String lastName;
+
+    @Column(name = "address")
     String address;
+
+    @Column(name = "password")
     String password;
 
     public User(){}
