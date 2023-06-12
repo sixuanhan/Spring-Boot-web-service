@@ -1,12 +1,12 @@
 package com.example.userRegistration;
 
 import lombok.Data;
-
-import javax.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Data
 public class User {
     @Id
@@ -106,6 +106,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
                 ", password='" + password + '\'' +
+                ", id='" + id + '\'' +
                 '}';
     }
 }

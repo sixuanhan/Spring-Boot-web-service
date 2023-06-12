@@ -5,6 +5,7 @@ spring:
   # Jpa Properties
   datasource:
     # url: jdbc:mysql://localhost:3306/userregistration
+    url: ${spring.datasource.url}
     username: ${spring.datasource.username}
     password: ${spring.datasource.password}
 

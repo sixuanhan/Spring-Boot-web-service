@@ -17,7 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/students")
 public class UserController {
     @Autowired
-    private UserService service;
+    private UserService2 service;
 
     @Operation(summary = "Create a user")
     @ApiResponses(value = {
