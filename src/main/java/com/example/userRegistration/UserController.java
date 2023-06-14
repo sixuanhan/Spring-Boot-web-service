@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     private UserService2 service;

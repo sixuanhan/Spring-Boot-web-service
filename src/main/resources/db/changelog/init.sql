@@ -6,4 +6,4 @@ create TABLE users.user(
         address character varying(255)  NULL,
         password character varying(255)  NULL,
         PRIMARY KEY (id)
-+);
+);
