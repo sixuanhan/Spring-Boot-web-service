@@ -3,6 +3,7 @@ package com.example.userRegistration;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -35,7 +36,7 @@ public class CountryController {
     @GetMapping("/restCountry")
     public ResponseEntity<?> getCountries() {
         try {
-            String uri="https://countriesnow.space/api/v0.1/countries";
+            String uri="https://countriesnow.space/api/v0.1/countries/population";
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForObject(uri, String.class);
             return new ResponseEntity<>(result, HttpStatus.OK);

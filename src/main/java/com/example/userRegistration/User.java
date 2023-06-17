@@ -29,18 +29,25 @@ public class User {
     @Column(name = "password")
     String password;
 
+    @Column(name = "country")
+    String country;
+
+    @Column(name = "population")
+    long population;
+
     public User(){}
 
-    public User(String email, String firstName, String lastName, String address, String password) {
+    public User(String email, String firstName, String lastName, String address, String password, String country) {
         super();
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.password = password;
+        this.country = country;
     }
 
-    public User(Long id, String email, String firstName, String lastName, String address, String password) {
+    public User(Long id, String email, String firstName, String lastName, String address, String password, String country, long population) {
         super();
         this.id = id;
         this.email = email;
@@ -48,6 +55,8 @@ public class User {
         this.lastName = lastName;
         this.address = address;
         this.password = password;
+        this.country = country;
+        this.population = population;
     }
 
     public Long getId() {
@@ -74,8 +83,20 @@ public class User {
         return password;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public long getPopulation() {
+        return population;
+    }
+
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setPopulation(long population) {
+        this.population = population;
     }
 
     @Override
@@ -87,6 +108,8 @@ public class User {
                 ", address='" + address + '\'' +
                 ", password='" + password + '\'' +
                 ", id='" + id + '\'' +
+                ", country='" + country + '\'' +
+                ", population='" + population + '\'' +
                 '}';
     }
 }

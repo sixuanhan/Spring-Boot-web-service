@@ -5,5 +5,7 @@ create TABLE users.user(
         last_name character varying(255) NOT NULL,
         address character varying(255)  NULL,
         password character varying(255)  NULL,
+        country character varying(255)  NULL,
+        population BIGINT NOT NULL,
         PRIMARY KEY (id)
 );

@@ -17,7 +17,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    private UserService2 service;
+    private UserService2 userService;
+    private CountryService countryService;
 
     @Operation(summary = "Create a user")
     @ApiResponses(value = {
@@ -26,7 +27,8 @@ public class UserController {
                             schema = @Schema(implementation = User.class)) })})
     @PostMapping("/")
     public ResponseEntity<User> create(@RequestBody User user) throws URISyntaxException {
-        User createdUser = service.create(user);
+        User createdUser = userService.create(user);
+        createdUser.setPopulation(countryService.getPopulationByCountry(createdUser.getCountry()));
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -47,7 +49,7 @@ public class UserController {
                     content = @Content) })
     @GetMapping("/{id}")
     public ResponseEntity<User> read(@PathVariable("id") Long id) {
-        User foundUser = service.read(id);
+        User foundUser = userService.read(id);
         if (foundUser == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -64,7 +66,7 @@ public class UserController {
                     content = @Content) })
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) {
-        User updatedUser = service.update(id, user);
+        User updatedUser = userService.update(id, user);
         if (updatedUser == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -78,7 +80,7 @@ public class UserController {
                     content = @Content)})
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
-        service.delete(id);
+        userService.delete(id);
 
         return ResponseEntity.noContent().build();
     }
