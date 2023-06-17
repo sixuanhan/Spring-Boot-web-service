@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class UserController {
     @Autowired
     private UserService2 userService;
+    @Autowired
     private CountryService countryService;
 
     @Operation(summary = "Create a user")

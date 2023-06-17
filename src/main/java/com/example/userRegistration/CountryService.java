@@ -12,7 +12,11 @@ import java.util.Map;
 
 @Service
 public class CountryService {
-    private Map<String, Long> map = new HashMap<>();
+    private Map<String, Long> map;
+
+    public CountryService() {
+        map = null;
+    }
 
     /*
     Load country data if we haven't done that before and find the population of a country
@@ -25,15 +29,18 @@ public class CountryService {
                 String uri="https://countriesnow.space/api/v0.1/countries/population";
                 RestTemplate restTemplate = new RestTemplate();
                 String result = restTemplate.getForObject(uri, String.class);
-            ObjectMapper mapper = new ObjectMapper();
+                ObjectMapper mapper = new ObjectMapper();
             // map to data
-            CountryData data = mapper.readValue(result, CountryData.class);
+                CountryData data = mapper.readValue(result, CountryData.class);
+
+                map = new HashMap<>();
 
             // load to map
-            for (CountryData.Country count: data.list) {
-                count.findLatestPopulation();
-                map.put(count.country, Long.valueOf(count.latestPopulation.value));
-            }
+                for (CountryData.Country count: data.list) {
+                    count.findLatestPopulation();
+//                    System.out.println(count);
+                    map.put(count.country, Long.valueOf(count.latestPopulation.value));
+                }
             } catch (Exception e){
                 e.printStackTrace();
                 return 0;
